@@ -1,15 +1,15 @@
 import Head from 'next/head';
 import { Box, Container } from '@mui/material';
-import { CustomerListResults } from '../components/customer/customer-list-results';
-import { CustomerListToolbar } from '../components/customer/customer-list-toolbar';
+import { UserListResults } from '../components/users/user-list-results';
+import { UserListToolbar } from '../components/users/user-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { customers } from '../__mocks__/customers';
+import { users } from '../__mocks__/users';
 
-const Customers = () => (
+const Users = () => (
   <>
     <Head>
       <title>
-        Customers | Material Kit
+      Users
       </title>
     </Head>
     <Box
@@ -20,18 +20,18 @@ const Customers = () => (
       }}
     >
       <Container maxWidth={false}>
-        <CustomerListToolbar />
+        <UserListToolbar />
         <Box sx={{ mt: 3 }}>
-          <CustomerListResults customers={customers} />
+          <UserListResults users={users} />
         </Box>
       </Container>
     </Box>
   </>
 );
-Customers.getLayout = (page) => (
+Users.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default Customers;
+export default Users;

@@ -18,7 +18,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          Material Kit Pro
+    wikiweb admin panel
         </title>
         <meta
           name="viewport"
