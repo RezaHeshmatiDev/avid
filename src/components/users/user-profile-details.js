@@ -10,6 +10,28 @@ import {
   TextField,
 } from "@mui/material";
 
+const sexes = [
+  {
+    value: "male",
+    label: "Male",
+  },
+  {
+    value: "female",
+    label: "Female",
+  },
+];
+
+const statuses = [
+  {
+    value: "ENABLE",
+    label: "Enable",
+  },
+  {
+    value: "DISABLE",
+    label: "Disable",
+  },
+];
+
 const states = [
   {
     value: "alabama",
@@ -25,19 +47,12 @@ const states = [
   },
 ];
 
-export const PermissionsProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: "Katarina",
-    lastName: "Smith",
-    email: "demo@devias.io",
-    phone: "",
-    state: "Alabama",
-    country: "USA",
-  });
+export const UserProfileDetails = ({ user, ...props }) => {
+  const [userState, setUserState] = useState(user);
 
   const handleChange = (event) => {
-    setValues({
-      ...values,
+    setUserState({
+      ...userState,
       [event.target.name]: event.target.value,
     });
   };
@@ -56,9 +71,8 @@ export const PermissionsProfileDetails = (props) => {
                 label="First name"
                 name="firstName"
                 onChange={handleChange}
-                required
-                value={values.firstName}
-                variant="outlined"
+                value={user.first_name}
+                variant="standard"
               />
             </Grid>
             <Grid item md={6} xs={12}>
@@ -67,9 +81,38 @@ export const PermissionsProfileDetails = (props) => {
                 label="Last name"
                 name="lastName"
                 onChange={handleChange}
+                value={user.last_name}
+                variant="standard"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Sex"
+                name="sex"
+                onChange={handleChange}
                 required
-                value={values.lastName}
-                variant="outlined"
+                select
+                SelectProps={{ native: true }}
+                value={user.sex}
+                variant="standard"
+              >
+                {sexes.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Mobile Number"
+                name="mobile"
+                onChange={handleChange}
+                type="number"
+                value={user.mobile}
+                variant="standard"
               />
             </Grid>
             <Grid item md={6} xs={12}>
@@ -78,46 +121,43 @@ export const PermissionsProfileDetails = (props) => {
                 label="Email Address"
                 name="email"
                 onChange={handleChange}
-                required
-                value={values.email}
-                variant="outlined"
+                value={user.email}
+                variant="standard"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Phone Number"
-                name="phone"
+                label="Referrer Mobile"
+                name="referrer-mobile"
                 onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
+                value={user.referrer_mobile}
+                variant="standard"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Country"
-                name="country"
+                label="Referrer Mobile"
+                name="referrer-mobile"
                 onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
+                value={user.referrer_mobile}
+                variant="standard"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Select State"
-                name="state"
+                label="Status"
+                name="status"
                 onChange={handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
+                value={user.status}
+                variant="standard"
               >
-                {states.map((option) => (
+                {statuses.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>

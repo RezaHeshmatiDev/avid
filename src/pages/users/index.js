@@ -73,6 +73,7 @@ const Users = () => {
   };
 
   const users = getAllUsersData?.data?.data?.users;
+  console.log({ users });
   const handleOnSearchClick = () => {
     getAllUsers({});
   };

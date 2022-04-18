@@ -16,9 +16,9 @@ import {
   TableSortLabel,
   Typography,
 } from "@mui/material";
-import { getInitials } from "../../utils/get-initials";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
 
 export const UserListResults = ({
   users,
@@ -62,6 +62,7 @@ export const UserListResults = ({
   //   setSelectedUserIds(newSelectedUserIds);
   // };
 
+  const router = useRouter();
   const createSortHandler = (property) => (event) => {
     onRequestSort(property);
   };
@@ -143,7 +144,14 @@ export const UserListResults = ({
                   <TableCell>{user.mobile}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell style={{ cursor: "pointer", textAlign: "center" }}>
-                    <SettingsIcon />
+                    <NextLink
+                      href={{
+                        pathname: "/users/" + user.id,
+                        query: user,
+                      }}
+                    >
+                      <SettingsIcon />
+                    </NextLink>
                   </TableCell>
                 </TableRow>
               ))}
