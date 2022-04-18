@@ -13,16 +13,23 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TableSortLabel,
   Typography,
 } from "@mui/material";
 import { getInitials } from "../../utils/get-initials";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
-export const UserListResults = ({ users, ...rest }) => {
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
-
+export const UserListResults = ({
+  users,
+  handleLimitChange,
+  handlePageChange,
+  limit,
+  page,
+  onRequestSort,
+  sortData,
+  ...rest
+}) => {
   // const handleSelectAll = (event) => {
   //   let newSelectedUserIds;
 
@@ -55,12 +62,8 @@ export const UserListResults = ({ users, ...rest }) => {
   //   setSelectedUserIds(newSelectedUserIds);
   // };
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(property);
   };
 
   return (
@@ -81,15 +84,48 @@ export const UserListResults = ({ users, ...rest }) => {
                     onChange={handleSelectAll}
                   />
                 </TableCell> */}
-                <TableCell>Name</TableCell>
-                <TableCell>Phone</TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={sortData.field == "firstName"}
+                    direction={sortData.type}
+                    onClick={createSortHandler({
+                      field: "firstName",
+                      type:
+                        sortData.field == "lastName"
+                          ? "desc"
+                          : sortData.type == "asc"
+                          ? "desc"
+                          : "asc",
+                    })}
+                  >
+                    First Name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={sortData.field == "lastName"}
+                    direction={sortData.type}
+                    onClick={createSortHandler({
+                      field: "lastName",
+                      type:
+                        sortData.field == "firstName"
+                          ? "desc"
+                          : sortData.type == "asc"
+                          ? "desc"
+                          : "asc",
+                    })}
+                  >
+                    Last Name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>Mobile</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Config</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.slice(0, limit).map((user) => (
-                <TableRow hover key={user.id} selected={selectedUserIds.indexOf(user.id) !== -1}>
+                <TableRow hover key={user.id}>
                   {/* <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedUserIds.indexOf(user.id) !== -1}
@@ -98,21 +134,13 @@ export const UserListResults = ({ users, ...rest }) => {
                     />
                   </TableCell> */}
                   <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: "center",
-                        display: "flex",
-                      }}
-                    >
-                      {/* <Avatar src={user.avatarUrl} sx={{ mr: 2 }}> */}
-                      {getInitials(user.name)}
-                      {/* </Avatar> */}
-                      <Typography color="textPrimary" variant="body1">
-                        {user.name}
-                      </Typography>
-                    </Box>
+                    {/* <Avatar src={user.avatarUrl} sx={{ mr: 2 }}> */}
+                    {/* {getInitials(user.first_name + user.last_name)} */}
+                    {/* </Avatar> */}
+                    {user.first_name}
                   </TableCell>
-                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>{user.last_name}</TableCell>
+                  <TableCell>{user.mobile}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell style={{ cursor: "pointer", textAlign: "center" }}>
                     <SettingsIcon />
