@@ -19,6 +19,9 @@ const Users = () => {
     field: "firstName",
     type: "asc",
   });
+
+  console.log({ sortData });
+
   const {
     data: getAllUsersData,
     isLoading: gettingAllUsers,
@@ -82,6 +85,7 @@ const Users = () => {
   };
 
   React.useEffect(() => {
+    console.log("in effect :", { sortData });
     getAllUsers({});
   }, [limit, page, sortData]);
   React.useEffect(() => {
