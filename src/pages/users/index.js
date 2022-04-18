@@ -1,10 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import { Box, Container, Modal, TextField, Typography } from "@mui/material";
-import { UserListResults } from "../components/users/user-list-results";
-import { UserListToolbar } from "../components/users/user-list-toolbar";
-import { DashboardLayout } from "../components/dashboard-layout";
-import useGetAllUsers from "../apiCalls/useGetAllUsers";
+import { UserListResults } from "../../components/users/user-list-results";
+import { UserListToolbar } from "../../components/users/user-list-toolbar";
+import { DashboardLayout } from "../../components/dashboard-layout";
+import useGetAllUsers from "../../apiCalls/useGetAllUsers";
 import Loading from "src/components/loading";
 import AddUserModal from "src/components/users/addUserModal";
 import useAddUser from "src/apiCalls/useAddUser";
@@ -19,8 +19,6 @@ const Users = () => {
     field: "firstName",
     type: "asc",
   });
-
-  console.log({ sortData });
 
   const {
     data: getAllUsersData,
@@ -80,12 +78,10 @@ const Users = () => {
   };
 
   const handleSorting = (sortData) => {
-    console.log("asdfasdf", sortData);
     setSortData(sortData);
   };
 
   React.useEffect(() => {
-    console.log("in effect :", { sortData });
     getAllUsers({});
   }, [limit, page, sortData]);
   React.useEffect(() => {
