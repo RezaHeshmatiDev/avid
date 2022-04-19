@@ -147,7 +147,6 @@ export const UserListResults = ({
                     <NextLink
                       href={{
                         pathname: "/users/" + user.id,
-                        query: user,
                       }}
                     >
                       <SettingsIcon />

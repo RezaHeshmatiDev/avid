@@ -34,7 +34,7 @@ export default function AddUserModal({ show, handleClose, onSubmit, isSubmiting 
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Add User
         </Typography>
-        <FormControl onSubmit={(data) => console.log("asdfasdf", data)}>
+        <FormControl>
           <TextField
             sx={inputsStyles}
             id="filled-basic"
