@@ -94,6 +94,7 @@ const Roles = () => {
   }, [addRoleError]);
 
   const handleAddRolesModalClose = () => setShowAddRolesModal(false);
+
   if (gettingAllRoles) return <Loading show={gettingAllRoles} />;
   if (!gettingAllRoles && getAllRolesData)
     return (

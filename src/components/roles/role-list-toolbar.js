@@ -10,7 +10,12 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 
-export const RoleListToolbar = (props) => (
+export const RoleListToolbar = ({
+  handleOnSearchClick,
+  handleOnAddRolesClick,
+  handleOnSearch,
+  ...props
+}) => (
   <Box {...props}>
     <Box
       sx={{
@@ -31,17 +36,18 @@ export const RoleListToolbar = (props) => (
         <Button startIcon={<DownloadIcon fontSize="small" />} sx={{ mr: 1 }}>
           Export
         </Button> */}
-        <Button color="primary" variant="contained">
-          Add roles
+        <Button color="primary" variant="contained" onClick={handleOnAddRolesClick}>
+          Add Roles
         </Button>
       </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
         <CardContent>
-          <Box sx={{ maxWidth: 500 }}>
+          <Box sx={{ maxWidth: 500, display: "flex" }}>
             <TextField
               fullWidth
+              onChange={(e) => handleOnSearch(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -54,6 +60,9 @@ export const RoleListToolbar = (props) => (
               placeholder="Search roles"
               variant="outlined"
             />
+            <Button onClick={handleOnSearchClick} variant="outlined" sx={{ m: 1 }}>
+              search
+            </Button>
           </Box>
         </CardContent>
       </Card>

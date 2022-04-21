@@ -38,52 +38,25 @@ export default function AddRoleModal({ show, handleClose, onSubmit, isSubmiting 
           <TextField
             sx={inputsStyles}
             id="filled-basic"
-            label="First Name"
+            label="Name"
             variant="filled"
-            {...register("firstName")}
+            {...register("name")}
           />
           <TextField
-            {...register("lastName")}
+            {...register("label")}
             sx={inputsStyles}
             id="filled-basic"
-            label="Last Name"
-            variant="filled"
-          />
-          <TextField
-            {...register("mobile")}
-            sx={inputsStyles}
-            id="filled-basic"
-            label="Mobile"
+            label="Label"
             variant="filled"
           />
           <TextField
-            {...register("email")}
+            {...register("type")}
             sx={inputsStyles}
             id="filled-basic"
-            label="Email"
+            label="Type"
             variant="filled"
           />
-          <TextField
-            {...register("refferal")}
-            sx={inputsStyles}
-            id="filled-basic"
-            label="Refferal"
-            variant="filled"
-          />
-          <TextField
-            {...register("status")}
-            sx={inputsStyles}
-            id="filled-basic"
-            label="Status"
-            variant="filled"
-          />
-          <TextField
-            {...register("password")}
-            sx={inputsStyles}
-            id="filled-basic"
-            label="Password"
-            variant="filled"
-          />
+
           <LoadingButton
             loading={isSubmiting}
             sx={inputsStyles}
