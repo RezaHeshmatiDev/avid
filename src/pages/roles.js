@@ -1,47 +1,143 @@
+import React from "react";
 import Head from "next/head";
-import { Box, Container, Grid, Pagination } from "@mui/material";
-import { roles } from "../__mocks__/roles";
-import { RoleListToolbar } from "../components/role/role-list-toolbar";
-import { RoleCard } from "../components/role/role-card";
+import { Box, Container } from "@mui/material";
+import { RoleListResults } from "../components/roles/role-list-results";
+import { RoleListToolbar } from "../components/roles/role-list-toolbar";
 import { DashboardLayout } from "../components/dashboard-layout";
+import useGetAllRoles from "../apiCalls/useGetAllRoles";
+import Loading from "src/components/loading";
+import AddRoleModal from "src/components/roles/addRoleModal";
+import useAddRole from "src/apiCalls/useAddRole";
+import Swal from "sweetalert2";
 
-const Roles = () => (
-  <>
-    <Head>
-      <title>Roles</title>
-    </Head>
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8,
-      }}
-    >
-      <Container maxWidth={false}>
-        <RoleListToolbar />
-        <Box sx={{ pt: 3 }}>
-          <Grid container spacing={3}>
-            {roles.map((product) => (
-              <Grid item key={product.id} lg={4} md={6} xs={12}>
-                <RoleCard product={product} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+const Roles = () => {
+  const [showAddRolesModal, setShowAddRolesModal] = React.useState(false);
+  const [limit, setLimit] = React.useState(10);
+  const [page, setPage] = React.useState(0);
+  const [keyword, setKeyword] = React.useState(undefined);
+  const [sortData, setSortData] = React.useState({
+    field: "name",
+    type: "asc",
+  });
+
+  const {
+    data: getAllRolesData,
+    isLoading: gettingAllRoles,
+    error: getAllRolesError,
+    refetch: getAllRoles,
+  } = useGetAllRoles({
+    limit,
+    offset: page * limit,
+    keyword,
+    sortData,
+  });
+  const {
+    data: addRoleData,
+    isLoading: addingRole,
+    error: addRoleError,
+    mutate: addRoleMutate,
+  } = useAddRole();
+
+  const errorModal = (error) => {
+    Swal.fire({
+      title: error.code,
+      html: ` <p>${error.message}</p>
+        <hr/>
+          <br/>
+
+      ${Object.values(error.fields).join("<br/>")}
+      `,
+      icon: "error",
+      confirmButtonText: "ok",
+    });
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+  };
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const addRole = (role) => {
+    addRoleMutate({
+      first_name: user.firstName,
+      last_name: user.lastName,
+      mobile: user.mobile,
+      email: user.email,
+      password: user.password,
+      status: user.status,
+      refferer_mobile: user.mobile,
+    });
+  };
+
+  const roles = getAllRolesData?.data?.data?.roles;
+  const handleOnSearchClick = () => {
+    getAllRoles({});
+    users;
+  };
+
+  const handleSorting = (sortData) => {
+    setSortData(sortData);
+  };
+
+  React.useEffect(() => {
+    getAllRoles({});
+  }, [limit, page, sortData]);
+  React.useEffect(() => {
+    setShowAddRolesModal(false);
+  }, [addRoleData, addRoleError]);
+
+  React.useEffect(() => {
+    if (addRoleError) errorModal(addRoleError.response.data.error);
+  }, [addRoleError]);
+
+  const handleAddRolesModalClose = () => setShowAddRolesModal(false);
+  if (gettingAllRoles) return <Loading show={gettingAllRoles} />;
+  if (!gettingAllRoles && getAllRolesData)
+    return (
+      <>
+        <Head>
+          <title>Roles</title>
+        </Head>
+        <AddRoleModal
+          show={showAddRolesModal}
+          handleClose={handleAddRolesModalClose}
+          onSubmit={(data) => addRole(data)}
+          isSubmiting={addingRole}
+        />
         <Box
+          component="main"
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            pt: 3,
+            flexGrow: 1,
+            py: 8,
           }}
         >
-          <Pagination color="primary" count={3} size="small" />
+          <Container maxWidth={false}>
+            <RoleListToolbar
+              handleOnAddRolesClick={() => setShowAddRolesModal(true)}
+              handleOnSearch={(value) => setKeyword(value)}
+              handleOnSearchClick={handleOnSearchClick}
+            />
+            <Box sx={{ mt: 3 }}>
+              <RoleListResults
+                roles={roles}
+                handlePageChange={handlePageChange}
+                handleLimitChange={handleLimitChange}
+                page={page}
+                limit={limit}
+                onRequestSort={handleSorting}
+                sortData={sortData}
+              />
+            </Box>
+          </Container>
         </Box>
-      </Container>
-    </Box>
-  </>
-);
-
+      </>
+    );
+  if (getAllRolesError) return <div>somthing went wrong</div>;
+  return <></>;
+};
 Roles.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Roles;

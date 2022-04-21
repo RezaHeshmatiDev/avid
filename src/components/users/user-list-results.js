@@ -17,7 +17,6 @@ import {
   Typography,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useRouter } from "next/router";
 import NextLink from "next/link";
 
 export const UserListResults = ({
@@ -62,7 +61,6 @@ export const UserListResults = ({
   //   setSelectedUserIds(newSelectedUserIds);
   // };
 
-  const router = useRouter();
   const createSortHandler = (property) => (event) => {
     onRequestSort(property);
   };
