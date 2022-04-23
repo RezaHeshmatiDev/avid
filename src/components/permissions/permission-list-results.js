@@ -8,6 +8,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   TableSortLabel,
 } from "@mui/material";
@@ -68,11 +69,10 @@ export const PermissionListResults = ({
                         sortData.field == "id" ? "desc" : sortData.type == "asc" ? "desc" : "asc",
                     })}
                   >
-                    Name
+                    Label
                   </TableSortLabel>
                 </TableCell>
-                <TableCell>Users count</TableCell>
-                <TableCell>Permissions count</TableCell>
+                <TableCell>Roles count</TableCell>
 
                 <TableCell style={{ textAlign: "center" }}>Config</TableCell>
               </TableRow>
@@ -93,9 +93,8 @@ export const PermissionListResults = ({
                     {/* </Avatar> */}
                     {permission.id}
                   </TableCell>
-                  <TableCell>{permission.name}</TableCell>
-                  <TableCell>{permission.users_count}</TableCell>
-                  <TableCell>{permission.permissions_count}</TableCell>
+                  <TableCell>{permission.label}</TableCell>
+                  <TableCell>{permission.roles_count}</TableCell>
 
                   <TableCell style={{ cursor: "pointer", textAlign: "center" }}>
                     <NextLink
@@ -112,6 +111,15 @@ export const PermissionListResults = ({
           </Table>
         </Box>
       </PerfectScrollbar>
+      <TablePagination
+        component="div"
+        count={permissions.length}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleLimitChange}
+        page={page}
+        rowsPerPage={limit}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
       {/* <Box sx={{ pt: 3 }}>
           <Grid container spacing={3}>
           {roles.map((product) => (

@@ -3,7 +3,7 @@ import instance from "./instance";
 
 const addRole = (role) => {
   return instance.post("/roles", {
-    params: role,
+    ...role,
   });
 };
 

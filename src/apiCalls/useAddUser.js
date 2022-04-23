@@ -3,7 +3,7 @@ import instance from "./instance";
 
 const addUser = (user) => {
   return instance.post("/users", {
-    params: user,
+    ...user,
   });
 };
 

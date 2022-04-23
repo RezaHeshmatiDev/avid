@@ -16,7 +16,7 @@ import { UserProfileDetails } from "src/components/users/user-profile-details";
 import { UserProfile } from "src/components/users/user-profile";
 import useGetOneUser from "src/apiCalls/useGetOneUser";
 import Loading from "src/components/loading";
-import useGetRoles from "src/apiCalls/useGetRoles";
+import useGetRoles from "src/apiCalls/useGetAllRoles";
 import useGetPermissions from "src/apiCalls/useGetPermissons";
 
 export default function UserDetailPage() {

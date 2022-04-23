@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 
-export const RoleListToolbar = ({
+export const PermissionListToolbar = ({
   handleOnSearchClick,
   handleOnAddPermissionsClick,
   handleOnSearch,
@@ -57,7 +57,7 @@ export const RoleListToolbar = ({
                   </InputAdornment>
                 ),
               }}
-              placeholder="Search roles"
+              placeholder="Search Permissions"
               variant="outlined"
             />
             <Button onClick={handleOnSearchClick} variant="outlined" sx={{ m: 1 }}>

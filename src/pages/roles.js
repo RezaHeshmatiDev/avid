@@ -62,20 +62,15 @@ const Roles = () => {
 
   const addRole = (role) => {
     addRoleMutate({
-      first_name: user.firstName,
-      last_name: user.lastName,
-      mobile: user.mobile,
-      email: user.email,
-      password: user.password,
-      status: user.status,
-      refferer_mobile: user.mobile,
+      name: role.name,
+      label: role.label,
+      type: role.type,
     });
   };
 
   const roles = getAllRolesData?.data?.data?.roles;
   const handleOnSearchClick = () => {
     getAllRoles({});
-    users;
   };
 
   const handleSorting = (sortData) => {

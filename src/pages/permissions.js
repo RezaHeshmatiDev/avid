@@ -62,20 +62,14 @@ const Permissions = () => {
 
   const addPermission = (permission) => {
     addPermissionMutate({
-      first_name: permission.firstName,
-      last_name: permission.lastName,
-      mobile: permission.mobile,
-      email: permission.email,
-      password: permission.password,
-      status: permission.status,
-      refferer_mobile: permission.mobile,
+      name: permission.name,
+      label: permission.label,
     });
   };
 
-  const permission = getAllPermissionsData?.data?.data?.permissions;
+  const permissions = getAllPermissionsData?.data?.data?.permissions;
   const handleOnSearchClick = () => {
     getAllPermissions({});
-    users;
   };
 
   const handleSorting = (sortData) => {

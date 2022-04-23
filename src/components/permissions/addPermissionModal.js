@@ -32,7 +32,7 @@ export default function AddPermissionModal({ show, handleClose, onSubmit, isSubm
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Add Role
+          Add Permission
         </Typography>
         <FormControl>
           <TextField

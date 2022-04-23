@@ -4,6 +4,17 @@ import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 
+const types = [
+  {
+    value: "CLIENT",
+    label: "Client",
+  },
+  {
+    value: "EMPLOYEE",
+    label: "Employee",
+  },
+];
+
 export default function AddRoleModal({ show, handleClose, onSubmit, isSubmiting }) {
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -54,8 +65,16 @@ export default function AddRoleModal({ show, handleClose, onSubmit, isSubmiting 
             sx={inputsStyles}
             id="filled-basic"
             label="Type"
-            variant="filled"
-          />
+            select
+            SelectProps={{ native: true }}
+            variant="standard"
+          >
+            {types.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
 
           <LoadingButton
             loading={isSubmiting}
