@@ -17,8 +17,8 @@ import { UserProfile } from "src/components/users/user-profile";
 import useGetOneUser from "src/apiCalls/useGetOneUser";
 import Loading from "src/components/loading";
 import useGetRoles from "src/apiCalls/useGetAllRoles";
-import useGetPermissions from "src/apiCalls/useGetPermissons";
-
+import useGetPermissions from "src/apiCalls/useGetAllPermissions";
+import useEditUser from "../../../apiCalls/useEditUser";
 export default function UserDetailPage() {
   const router = useRouter();
   const userId = router?.query?.id;
@@ -30,11 +30,11 @@ export default function UserDetailPage() {
     error: getPermissionsError,
   } = useGetPermissions();
 
-  console.log({ allRoles, allPermissions });
-
   const user = userData?.data?.data?.user;
   const userRoles = userData?.data?.data?.roles;
   const userPermissions = userData?.data?.data?.permissions;
+  const roles = allRoles?.data?.data?.roles;
+  const permissions = allPermissions?.data?.data?.permissions;
   if (gettingUser || gettingRoles || gettingPermmission) return <Loading show={true} />;
   return (
     <>
@@ -52,13 +52,20 @@ export default function UserDetailPage() {
           <Typography sx={{ mb: 3 }} variant="h4">
             User Details/Edit
           </Typography>
-          {userData ? (
+          {userData && allRoles && allPermissions ? (
             <Grid container spacing={3}>
               <Grid item lg={4} md={6} xs={12}>
                 <UserProfile user={user} />
               </Grid>
               <Grid item lg={8} md={6} xs={12}>
-                <UserProfileDetails user={user} roles={userRoles} permissions={userPermissions} />
+                <UserProfileDetails
+                  user={user}
+                  userRoles={userRoles}
+                  userPermissions={userPermissions}
+                  allRoles={roles}
+                  allPermissions={permissions}
+                  userId={userId}
+                />
               </Grid>
             </Grid>
           ) : (

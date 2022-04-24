@@ -3,7 +3,6 @@ import { getToken } from "../utils/getToken";
 import instance from "./instance";
 
 const getAllUsers = ({ keyword, offset, limit, sortData }) => {
-  console.log("getAllusers", { sortData });
   return instance.get("/users", {
     params: {
       limit,

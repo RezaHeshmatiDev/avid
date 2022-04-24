@@ -2,7 +2,9 @@ import { useQuery } from "react-query";
 import instance from "./instance";
 
 const getPermissions = () => {
-  return instance.get(`/permissions`);
+  return instance.get(`/permissions`, {
+    params: { limit: 1000 },
+  });
 };
 
 const useGetPermissions = () => {

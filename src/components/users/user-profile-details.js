@@ -10,6 +10,9 @@ import {
   TextField,
 } from "@mui/material";
 import RolesAndPermissionsModal from "./roles-and-permissions-modal";
+import useEditUser from "src/apiCalls/useEditUser";
+import useSyncPermissions from "src/apiCalls/useSyncPermissions";
+import useSyncRoles from "src/apiCalls/useSyncRoles";
 
 const sexes = [
   {
@@ -33,12 +36,43 @@ const statuses = [
   },
 ];
 
-export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
+export const UserProfileDetails = ({
+  user,
+  allRoles,
+  allPermissions,
+  userRoles,
+  userPermissions,
+  userId,
+  ...props
+}) => {
   const [userState, setUserState] = useState(user);
   const [rolesModalIsOpen, setRolesModalIsOpen] = useState(false);
   const [permissonsModalIsOpen, setPermissonsModalIsOpen] = useState(false);
+  const {
+    data: editUserData,
+    isLoading: editingUser,
+    error: editUserError,
+    mutate: editUser,
+  } = useEditUser(user, userId);
+
+  const {
+    data: syncPermissionsData,
+    isLoading: syncingPermissions,
+    error: syncingPermissionsError,
+    mutate: syncPermissions,
+  } = useSyncPermissions();
+
+  const {
+    data: syncRolesData,
+    isLoading: syncingRoles,
+    error: syncingRolesError,
+    mutate: syncRoles,
+  } = useSyncRoles();
+
+  const onSubmit = () => editUser();
 
   const handleChange = (event) => {
+    console.log({ event });
     setUserState({
       ...userState,
       [event.target.name]: event.target.value,
@@ -51,13 +85,21 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
         label="Config Roles"
         show={rolesModalIsOpen}
         handleClose={() => setRolesModalIsOpen(false)}
-        fields={roles}
+        fields={allRoles}
+        selectedFields={userRoles}
+        type="role"
+        onSubmit={(selectedItems) => syncRoles({ userId, roles: selectedItems })}
+        isSubmiting={syncingRoles}
       />
       <RolesAndPermissionsModal
         label="Config Permissions"
         show={permissonsModalIsOpen}
         handleClose={() => setPermissonsModalIsOpen(false)}
-        fields={permissions}
+        fields={allPermissions}
+        selectedFields={userPermissions}
+        type="permission"
+        isSubmiting={syncingPermissions}
+        onSubmit={(selectedItems) => syncPermissions({ userId, permissions: selectedItems })}
       />
 
       <form autoComplete="off" noValidate {...props}>
@@ -73,7 +115,7 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
                   label="First name"
                   name="firstName"
                   onChange={handleChange}
-                  value={user.first_name}
+                  defaultValue={user.first_name}
                   variant="standard"
                 />
               </Grid>
@@ -83,7 +125,7 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
                   label="Last name"
                   name="lastName"
                   onChange={handleChange}
-                  value={user.last_name}
+                  defaultValue={user.last_name}
                   variant="standard"
                 />
               </Grid>
@@ -96,11 +138,11 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
                   // required
                   select
                   SelectProps={{ native: true }}
-                  value={user.sex}
+                  defaultValue={user.sex}
                   variant="standard"
                 >
                   {sexes.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option key={option.value} defaultValue={option.value}>
                       {option.label}
                     </option>
                   ))}
@@ -113,7 +155,7 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
                   name="mobile"
                   onChange={handleChange}
                   type="number"
-                  value={user.mobile}
+                  defaultValue={user.mobile}
                   variant="standard"
                 />
               </Grid>
@@ -123,7 +165,7 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
                   label="Email Address"
                   name="email"
                   onChange={handleChange}
-                  value={user.email}
+                  defaultValue={user.email}
                   variant="standard"
                 />
               </Grid>
@@ -133,7 +175,7 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
                   label="Referrer Mobile"
                   name="referrer-mobile"
                   onChange={handleChange}
-                  value={user.referrer_mobile}
+                  defaultValue={user.referrer_mobile}
                   variant="standard"
                 />
               </Grid>
@@ -147,17 +189,17 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
                   // required
                   select
                   SelectProps={{ native: true }}
-                  value={user.status}
+                  defaultValue={user.status}
                   variant="standard"
                 >
                   {statuses.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option key={option.value} defaultValue={option.value}>
                       {option.label}
                     </option>
                   ))}
                 </TextField>
               </Grid>
-              <Grid item md={12} xs={12} onClick={() => console.log("click")}>
+              <Grid item md={12} xs={12}>
                 <Button md={6} xs={6} onClick={() => setRolesModalIsOpen(true)}>
                   Roles
                 </Button>
@@ -175,7 +217,7 @@ export const UserProfileDetails = ({ user, roles, permissions, ...props }) => {
               p: 2,
             }}
           >
-            <Button color="primary" variant="contained">
+            <Button color="primary" variant="contained" onClick={onSubmit}>
               Save details
             </Button>
           </Box>
