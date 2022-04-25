@@ -1,8 +1,23 @@
 import React from "react";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, MenuItem, Modal, TextField, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
+
+const sexes = [
+  {
+    value: "Male",
+    label: "Male",
+  },
+  {
+    value: "Female",
+    label: "Female",
+  },
+  {
+    value: "Other",
+    label: "Other",
+  },
+];
 
 export default function AddUserModal({ show, handleClose, onSubmit, isSubmiting }) {
   const { register, handleSubmit } = useForm({
@@ -50,6 +65,21 @@ export default function AddUserModal({ show, handleClose, onSubmit, isSubmiting 
             variant="filled"
           />
           <TextField
+            id="filled-basic"
+            label="Sex"
+            sx={inputsStyles}
+            {...register("sex")}
+            // required
+            select
+            variant="filled"
+          >
+            {sexes.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
             {...register("mobile")}
             sx={inputsStyles}
             id="filled-basic"
@@ -71,17 +101,17 @@ export default function AddUserModal({ show, handleClose, onSubmit, isSubmiting 
             variant="filled"
           />
           <TextField
-            {...register("status")}
-            sx={inputsStyles}
-            id="filled-basic"
-            label="Status"
-            variant="filled"
-          />
-          <TextField
             {...register("password")}
             sx={inputsStyles}
             id="filled-basic"
             label="Password"
+            variant="filled"
+          />
+          <TextField
+            {...register("confirmPassword")}
+            sx={inputsStyles}
+            id="filled-basic"
+            label="Confirm password"
             variant="filled"
           />
           <LoadingButton

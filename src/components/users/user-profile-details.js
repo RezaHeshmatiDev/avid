@@ -7,21 +7,25 @@ import {
   CardHeader,
   Divider,
   Grid,
+  MenuItem,
   TextField,
 } from "@mui/material";
 import RolesAndPermissionsModal from "./roles-and-permissions-modal";
-import useEditUser from "src/apiCalls/useEditUser";
-import useSyncPermissions from "src/apiCalls/useSyncPermissions";
-import useSyncRoles from "src/apiCalls/useSyncRoles";
+
+import { LoadingButton } from "@mui/lab";
 
 const sexes = [
   {
-    value: "MALE",
+    value: "Male",
     label: "Male",
   },
   {
-    value: "FEMALE",
+    value: "Female",
     label: "Female",
+  },
+  {
+    value: "Other",
+    label: "Other",
   },
 ];
 
@@ -43,33 +47,20 @@ export const UserProfileDetails = ({
   userRoles,
   userPermissions,
   userId,
+  editUser,
+  editingUser,
+  syncingPermissions,
+  syncPermissions,
+  syncingRoles,
+  syncRoles,
   ...props
 }) => {
+  console.log("Lasdf", userId);
   const [userState, setUserState] = useState(user);
   const [rolesModalIsOpen, setRolesModalIsOpen] = useState(false);
   const [permissonsModalIsOpen, setPermissonsModalIsOpen] = useState(false);
-  const {
-    data: editUserData,
-    isLoading: editingUser,
-    error: editUserError,
-    mutate: editUser,
-  } = useEditUser(user, userId);
 
-  const {
-    data: syncPermissionsData,
-    isLoading: syncingPermissions,
-    error: syncingPermissionsError,
-    mutate: syncPermissions,
-  } = useSyncPermissions();
-
-  const {
-    data: syncRolesData,
-    isLoading: syncingRoles,
-    error: syncingRolesError,
-    mutate: syncRoles,
-  } = useSyncRoles();
-
-  const onSubmit = () => editUser();
+  const onSubmit = () => editUser({ user: userState, id: userId });
 
   const handleChange = (event) => {
     console.log({ event });
@@ -113,7 +104,7 @@ export const UserProfileDetails = ({
                   fullWidth
                   // helperText="Please specify the first name"
                   label="First name"
-                  name="firstName"
+                  name="first_name"
                   onChange={handleChange}
                   defaultValue={user.first_name}
                   variant="standard"
@@ -123,7 +114,7 @@ export const UserProfileDetails = ({
                 <TextField
                   fullWidth
                   label="Last name"
-                  name="lastName"
+                  name="last_name"
                   onChange={handleChange}
                   defaultValue={user.last_name}
                   variant="standard"
@@ -137,14 +128,13 @@ export const UserProfileDetails = ({
                   onChange={handleChange}
                   // required
                   select
-                  SelectProps={{ native: true }}
                   defaultValue={user.sex}
                   variant="standard"
                 >
                   {sexes.map((option) => (
-                    <option key={option.value} defaultValue={option.value}>
+                    <MenuItem key={option.value} value={option.value}>
                       {option.label}
-                    </option>
+                    </MenuItem>
                   ))}
                 </TextField>
               </Grid>
@@ -173,7 +163,7 @@ export const UserProfileDetails = ({
                 <TextField
                   fullWidth
                   label="Referrer Mobile"
-                  name="referrer-mobile"
+                  name="referrer_mobile"
                   onChange={handleChange}
                   defaultValue={user.referrer_mobile}
                   variant="standard"
@@ -188,14 +178,14 @@ export const UserProfileDetails = ({
                   onChange={handleChange}
                   // required
                   select
-                  SelectProps={{ native: true }}
+                  // SelectProps={{ native: true }}
                   defaultValue={user.status}
                   variant="standard"
                 >
                   {statuses.map((option) => (
-                    <option key={option.value} defaultValue={option.value}>
+                    <MenuItem key={option.value} value={option.value}>
                       {option.label}
-                    </option>
+                    </MenuItem>
                   ))}
                 </TextField>
               </Grid>
@@ -217,9 +207,14 @@ export const UserProfileDetails = ({
               p: 2,
             }}
           >
-            <Button color="primary" variant="contained" onClick={onSubmit}>
+            <LoadingButton
+              color="primary"
+              variant="contained"
+              loading={editingUser}
+              onClick={onSubmit}
+            >
               Save details
-            </Button>
+            </LoadingButton>
           </Box>
         </Card>
       </form>

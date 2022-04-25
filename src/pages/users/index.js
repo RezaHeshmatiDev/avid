@@ -40,12 +40,18 @@ const Users = () => {
 
   const errorModal = (error) => {
     Swal.fire({
-      title: error.code,
-      html: ` <p>${error.message}</p>
+      title: error?.code || 500,
+      html: `${
+        error
+          ? `<p>${error?.message}</p>
         <hr/>
           <br/>
 
       ${Object.values(error.fields).join("<br/>")}
+
+      `
+          : `somthing went wrong`
+      }
       `,
       icon: "error",
       confirmButtonText: "ok",
@@ -64,11 +70,12 @@ const Users = () => {
     addUserMutate({
       first_name: user.firstName,
       last_name: user.lastName,
+      sex: user.sex,
       mobile: user.mobile,
       email: user.email,
       password: user.password,
-      status: user.status,
-      refferer_mobile: user.mobile,
+      password_confirmation: user.confirmPassword,
+      referrer_mobile: user.refferal,
     });
   };
 
@@ -82,6 +89,10 @@ const Users = () => {
   };
 
   React.useEffect(() => {
+    if (addUserData) getAllUsers();
+  }, [addUserData]);
+
+  React.useEffect(() => {
     getAllUsers({});
   }, [limit, page, sortData]);
   React.useEffect(() => {
@@ -89,7 +100,7 @@ const Users = () => {
   }, [addUserData, addUserError]);
 
   React.useEffect(() => {
-    if (addUserError) errorModal(addUserError.response.data.error);
+    if (addUserError) errorModal(addUserError?.response?.data?.error);
   }, [addUserError]);
 
   const handleAddUsersModalClose = () => setShowAddUsersModal(false);
