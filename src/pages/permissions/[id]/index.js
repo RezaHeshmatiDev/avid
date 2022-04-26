@@ -11,6 +11,7 @@ import useDeletePermission from "src/apiCalls/useDeletePermission";
 import useEditPermission from "src/apiCalls/useEditPermission";
 import PermissionDetail from "src/components/permissions/permission-detail";
 import Swal from "sweetalert2";
+import { confirmModal, errorModal } from "src/utils/globalModal";
 
 export default function PermissionDetailPage() {
   const router = useRouter();
@@ -55,26 +56,6 @@ export default function PermissionDetailPage() {
 
   const permission = permissionData?.data?.data?.permission;
 
-  const errorModal = (error) => {
-    Swal.fire({
-      title: error?.code || 500,
-      html: `${
-        error
-          ? `<p>${error?.message}</p>
-        <hr/>
-          <br/>
-
-      ${Object.values(error.fields).join("<br/>")}
-
-      `
-          : `somthing went wrong`
-      }
-      `,
-      icon: "error",
-      confirmButtonText: "ok",
-    });
-  };
-
   if (gettingPermission) return <Loading show={true} />;
   return (
     <>
@@ -104,7 +85,7 @@ export default function PermissionDetailPage() {
               </Grid>
               <Grid item lg={4} md={6} xs={12}>
                 <LoadingButton
-                  onClick={() => deletePermission({ id: permissionId })}
+                  onClick={() => confirmModal(() => deletePermission({ id: permissionId }))}
                   color="error"
                   size="small"
                   loading={deletingPermission}

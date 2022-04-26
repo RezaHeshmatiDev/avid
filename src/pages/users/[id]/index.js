@@ -14,6 +14,7 @@ import useSyncPermissions from "src/apiCalls/useSyncPermissions";
 import useSyncRoles from "src/apiCalls/useSyncRoles";
 import useDeleteUser from "src/apiCalls/useDeleteUser";
 import { LoadingButton } from "@mui/lab";
+import { confirmModal, errorModal } from "src/utils/globalModal";
 export default function UserDetailPage() {
   const router = useRouter();
   const userId = router?.query?.id;
@@ -73,26 +74,6 @@ export default function UserDetailPage() {
   const roles = allRoles?.data?.data?.roles;
   const permissions = allPermissions?.data?.data?.permissions;
 
-  const errorModal = (error) => {
-    Swal.fire({
-      title: error?.code || 500,
-      html: `${
-        error
-          ? `<p>${error?.message}</p>
-        <hr/>
-          <br/>
-
-      ${Object.values(error.fields).join("<br/>")}
-
-      `
-          : `somthing went wrong`
-      }
-      `,
-      icon: "error",
-      confirmButtonText: "ok",
-    });
-  };
-
   React.useEffect(() => {
     if (deleteUserData) router.replace("/users");
   }, [deleteUserData]);
@@ -130,7 +111,7 @@ export default function UserDetailPage() {
               <Grid item lg={4} md={6} xs={12}>
                 <UserProfile user={user} />
                 <LoadingButton
-                  onClick={() => deleteUser({ id: userId })}
+                  onClick={() => confirmModal(() => deleteUser({ id: userId }))}
                   color="error"
                   size="small"
                   loading={deletingUser}

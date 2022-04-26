@@ -9,6 +9,7 @@ import Loading from "src/components/loading";
 import AddUserModal from "src/components/users/addUserModal";
 import useAddUser from "src/apiCalls/useAddUser";
 import Swal from "sweetalert2";
+import { errorModal } from "src/utils/globalModal";
 
 const Users = () => {
   const [showAddUsersModal, setShowAddUsersModal] = React.useState(false);
@@ -38,26 +39,6 @@ const Users = () => {
     error: addUserError,
     mutate: addUserMutate,
   } = useAddUser();
-
-  const errorModal = (error) => {
-    Swal.fire({
-      title: error?.code || 500,
-      html: `${
-        error
-          ? `<p>${error?.message}</p>
-        <hr/>
-          <br/>
-
-      ${Object.values(error.fields).join("<br/>")}
-
-      `
-          : `somthing went wrong`
-      }
-      `,
-      icon: "error",
-      confirmButtonText: "ok",
-    });
-  };
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);

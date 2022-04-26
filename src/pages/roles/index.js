@@ -9,6 +9,7 @@ import Loading from "src/components/loading";
 import AddRoleModal from "src/components/roles/addRoleModal";
 import useAddRole from "src/apiCalls/useAddRole";
 import Swal from "sweetalert2";
+import { errorModal } from "src/utils/globalModal";
 
 const Roles = () => {
   const [showAddRolesModal, setShowAddRolesModal] = React.useState(false);
@@ -41,20 +42,6 @@ const Roles = () => {
   React.useEffect(() => {
     if (addRoleData) getAllRoles();
   }, [addRoleData]);
-
-  const errorModal = (error) => {
-    Swal.fire({
-      title: error.code,
-      html: ` <p>${error.message}</p>
-        <hr/>
-          <br/>
-
-      ${Object.values(error.fields).join("<br/>")}
-      `,
-      icon: "error",
-      confirmButtonText: "ok",
-    });
-  };
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);

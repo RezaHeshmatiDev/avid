@@ -9,6 +9,7 @@ import Loading from "src/components/loading";
 import AddPermissionModal from "src/components/permissions/addPermissionModal";
 import useAddPermission from "src/apiCalls/useAddPermission";
 import Swal from "sweetalert2";
+import { errorModal } from "src/utils/globalModal";
 
 const Permissions = () => {
   const [showAddPermissionsModal, setShowAddPermissionsModal] = React.useState(false);
@@ -37,20 +38,6 @@ const Permissions = () => {
     error: addPermissionError,
     mutate: addPermissionMutate,
   } = useAddPermission();
-
-  const errorModal = (error) => {
-    Swal.fire({
-      title: error.code,
-      html: ` <p>${error.message}</p>
-      <hr/>
-      <br/>
-
-      ${Object.values(error.fields).join("<br/>")}
-      `,
-      icon: "error",
-      confirmButtonText: "ok",
-    });
-  };
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);

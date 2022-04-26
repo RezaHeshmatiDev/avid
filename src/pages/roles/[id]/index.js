@@ -19,6 +19,7 @@ import RoleDetail from "src/components/roles/role-detail";
 import useEditRole from "src/apiCalls/useEditRole";
 import useSyncPermissionsToRole from "src/apiCalls/useSyncPermissionsToRole";
 import Swal from "sweetalert2";
+import { confirmModal, errorModal } from "src/utils/globalModal";
 export default function RoleDetailPage() {
   const router = useRouter();
   const roleId = router?.query?.id;
@@ -84,28 +85,6 @@ export default function RoleDetailPage() {
   const role = roleData?.data?.data?.role;
   const permissions = allPermissions?.data?.data?.permissions;
 
-  console.log({ role });
-
-  const errorModal = (error) => {
-    Swal.fire({
-      title: error?.code || 500,
-      html: `${
-        error
-          ? `<p>${error?.message}</p>
-        <hr/>
-          <br/>
-
-      ${Object.values(error.fields).join("<br/>")}
-
-      `
-          : `somthing went wrong`
-      }
-      `,
-      icon: "error",
-      confirmButtonText: "ok",
-    });
-  };
-
   if (gettingRole || gettingPermissions) return <Loading show={true} />;
   return (
     <>
@@ -139,7 +118,7 @@ export default function RoleDetailPage() {
               </Grid>
               <Grid item lg={4} md={6} xs={12}>
                 <LoadingButton
-                  onClick={() => deleteRole({ id: roleId })}
+                  onClick={() => confirmModal(() => deleteRole({ id: roleId }))}
                   color="error"
                   size="small"
                   loading={deletingRole}
