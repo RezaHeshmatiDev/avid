@@ -18,6 +18,7 @@ import useDeleteRole from "../../../apiCalls/useDeleteRole";
 import RoleDetail from "src/components/roles/role-detail";
 import useEditRole from "src/apiCalls/useEditRole";
 import useSyncPermissionsToRole from "src/apiCalls/useSyncPermissionsToRole";
+import Swal from "sweetalert2";
 export default function RoleDetailPage() {
   const router = useRouter();
   const roleId = router?.query?.id;
@@ -36,6 +37,8 @@ export default function RoleDetailPage() {
     limit: 1000,
     offset: 0,
   });
+
+  console.log({ allPermissions });
 
   const {
     data: deleteRoleData,

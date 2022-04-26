@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import PermissionsModal from "./permission-modal";
 
 const PermissionDetail = ({
   permission,

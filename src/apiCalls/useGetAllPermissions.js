@@ -9,14 +9,14 @@ const getPermissions = ({ keyword, offset, limit, sortData }) => {
       ...(keyword
         ? {
             val_fast_search: keyword,
-            type_sort: sortData.type || "asc",
+            type_sort: sortData?.type || "asc",
             type_search: "fast",
-            field_fast_search:
-              sortData.field == "name" ? "roles.name,roles.label" : "roles.label,roles.name",
+            field_fast_search: "permissions.name,permissions.label",
+            field_sort: sortData?.field == "name" ? "permissions.name" : "permissions.label",
           }
         : {
             type_sort: sortData?.type || "asc",
-            field_sort: sortData?.field || "roles.label",
+            field_sort: sortData?.field == "name" ? "permissions.name" : "permissions.label",
           }),
     },
   });

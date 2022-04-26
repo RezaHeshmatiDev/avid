@@ -10,6 +10,7 @@ import useGetOnePermission from "src/apiCalls/useGetOnePermission";
 import useDeletePermission from "src/apiCalls/useDeletePermission";
 import useEditPermission from "src/apiCalls/useEditPermission";
 import PermissionDetail from "src/components/permissions/permission-detail";
+import Swal from "sweetalert2";
 
 export default function PermissionDetailPage() {
   const router = useRouter();
@@ -74,7 +75,7 @@ export default function PermissionDetailPage() {
     });
   };
 
-  if (gettingPermissions) return <Loading show={true} />;
+  if (gettingPermission) return <Loading show={true} />;
   return (
     <>
       <Head>

@@ -11,12 +11,12 @@ const getRoles = ({ keyword, offset, limit, sortData }) => {
             val_fast_search: keyword,
             type_sort: sortData.type || "asc",
             type_search: "fast",
-            field_fast_search:
-              sortData.field == "name" ? "roles.name,roles.label" : "roles.label,roles.name",
+            field_fast_search: "roles.name,roles.label",
+            field_sort: sortData?.field == "name" ? "roles.name" : "roles.label",
           }
         : {
             type_sort: sortData?.type || "asc",
-            field_sort: sortData?.field || "roles.label",
+            field_sort: sortData?.field == "name" ? "roles.name" : "roles.label",
           }),
     },
   });

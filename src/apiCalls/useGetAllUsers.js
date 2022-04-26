@@ -12,14 +12,12 @@ const getAllUsers = ({ keyword, offset, limit, sortData }) => {
             val_fast_search: keyword,
             type_sort: sortData.type || "asc",
             type_search: "fast",
-            field_fast_search:
-              sortData.field == "firstName"
-                ? "users.first_name,users.last_name,users.mobile,users.email"
-                : "users.last_name,users.first_name,users.mobile,users.email",
+            field_fast_search: "users.first_name,users.last_name,users.mobile,users.email",
+            field_sort: sortData.field == "firstName" ? "users.first_name" : "users.last_name",
           }
         : {
             type_sort: sortData.type || "asc",
-            field_sort: sortData.field,
+            field_sort: sortData.field == "firstName" ? "users.first_name" : "users.last_name",
           }),
     },
   });
