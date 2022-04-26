@@ -27,6 +27,7 @@ export const UserListResults = ({
   page,
   onRequestSort,
   sortData,
+  usersLength,
   ...rest
 }) => {
   // const handleSelectAll = (event) => {
@@ -158,7 +159,7 @@ export const UserListResults = ({
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={users.length}
+        count={usersLength}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}

@@ -31,6 +31,7 @@ const Users = () => {
     keyword,
     sortData,
   });
+  const usersLength = getAllUsersData?.data?.counted_users;
   const {
     data: addUserData,
     isLoading: addingUser,
@@ -80,6 +81,7 @@ const Users = () => {
   };
 
   const users = getAllUsersData?.data?.data?.users;
+
   const handleOnSearchClick = () => {
     getAllUsers({});
   };
@@ -139,6 +141,7 @@ const Users = () => {
                 limit={limit}
                 onRequestSort={handleSorting}
                 sortData={sortData}
+                usersLength={usersLength}
               />
             </Box>
           </Container>

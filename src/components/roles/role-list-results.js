@@ -8,6 +8,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   TableSortLabel,
 } from "@mui/material";
@@ -22,6 +23,7 @@ export const RoleListResults = ({
   page,
   onRequestSort,
   sortData,
+  rolesLength,
   ...rest
 }) => {
   const createSortHandler = (property) => (event) => {
@@ -112,6 +114,15 @@ export const RoleListResults = ({
           </Table>
         </Box>
       </PerfectScrollbar>
+      <TablePagination
+        component="div"
+        count={rolesLength}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleLimitChange}
+        page={page}
+        rowsPerPage={limit}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
       {/* <Box sx={{ pt: 3 }}>
           <Grid container spacing={3}>
           {roles.map((product) => (
@@ -132,8 +143,4 @@ export const RoleListResults = ({
         </Box> */}
     </Card>
   );
-};
-
-RoleListResults.propTypes = {
-  roles: PropTypes.array.isRequired,
 };

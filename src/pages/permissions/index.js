@@ -1,10 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { PermissionListResults } from "../components/permissions/permission-list-results";
-import { PermissionListToolbar } from "../components/permissions/permission-list-toolbar";
-import { DashboardLayout } from "../components/dashboard-layout";
-import useGetAllPermissions from "../apiCalls/useGetAllPermissions";
+import { PermissionListResults } from "../../components/permissions/permission-list-results";
+import { PermissionListToolbar } from "../../components/permissions/permission-list-toolbar";
+import { DashboardLayout } from "../../components/dashboard-layout";
+import useGetAllPermissions from "../../apiCalls/useGetAllPermissions";
 import Loading from "src/components/loading";
 import AddPermissionModal from "src/components/permissions/addPermissionModal";
 import useAddPermission from "src/apiCalls/useAddPermission";
@@ -42,8 +42,8 @@ const Permissions = () => {
     Swal.fire({
       title: error.code,
       html: ` <p>${error.message}</p>
-        <hr/>
-          <br/>
+      <hr/>
+      <br/>
 
       ${Object.values(error.fields).join("<br/>")}
       `,
@@ -68,6 +68,7 @@ const Permissions = () => {
   };
 
   const permissions = getAllPermissionsData?.data?.data?.permissions;
+  const permissionsLength = getAllPermissionsData?.data?.counted_permissions;
   const handleOnSearchClick = () => {
     getAllPermissions({});
   };
@@ -128,6 +129,7 @@ const Permissions = () => {
                 limit={limit}
                 onRequestSort={handleSorting}
                 sortData={sortData}
+                permissionsLength={permissionsLength}
               />
             </Box>
           </Container>

@@ -73,6 +73,7 @@ const Roles = () => {
   };
 
   const roles = getAllRolesData?.data?.data?.roles;
+  const rolesLength = getAllRolesData?.data?.counted_roles;
   const handleOnSearchClick = () => {
     getAllRoles({});
   };
@@ -129,6 +130,7 @@ const Roles = () => {
                 limit={limit}
                 onRequestSort={handleSorting}
                 sortData={sortData}
+                rolesLength={rolesLength}
               />
             </Box>
           </Container>

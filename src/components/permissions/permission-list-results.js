@@ -141,7 +141,3 @@ export const PermissionListResults = ({
     </Card>
   );
 };
-
-PermissionListResults.propTypes = {
-  permissions: PropTypes.array.isRequired,
-};
