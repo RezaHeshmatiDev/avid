@@ -1,10 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { RoleListResults } from "../components/roles/role-list-results";
-import { RoleListToolbar } from "../components/roles/role-list-toolbar";
-import { DashboardLayout } from "../components/dashboard-layout";
-import useGetAllRoles from "../apiCalls/useGetAllRoles";
+import { RoleListResults } from "../../components/roles/role-list-results";
+import { RoleListToolbar } from "../../components/roles/role-list-toolbar";
+import { DashboardLayout } from "../../components/dashboard-layout";
+import useGetAllRoles from "../../apiCalls/useGetAllRoles";
 import Loading from "src/components/loading";
 import AddRoleModal from "src/components/roles/addRoleModal";
 import useAddRole from "src/apiCalls/useAddRole";
@@ -37,6 +37,10 @@ const Roles = () => {
     error: addRoleError,
     mutate: addRoleMutate,
   } = useAddRole();
+
+  React.useEffect(() => {
+    if (addRoleData) getAllRoles();
+  }, [addRoleData]);
 
   const errorModal = (error) => {
     Swal.fire({

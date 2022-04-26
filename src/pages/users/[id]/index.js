@@ -17,18 +17,29 @@ import { LoadingButton } from "@mui/lab";
 export default function UserDetailPage() {
   const router = useRouter();
   const userId = router?.query?.id;
+  console.log({ userId });
   const {
     data: userData,
     isLoading: gettingUser,
     error: getUserError,
     refetch,
   } = useGetOneUser(userId);
-  const { data: allRoles, isLoading: gettingRoles, error: getRolesError } = useGetRoles();
+  const {
+    data: allRoles,
+    isLoading: gettingRoles,
+    error: getRolesError,
+  } = useGetRoles({
+    limit: 1000,
+    offset: 0,
+  });
   const {
     data: allPermissions,
     isLoading: gettingPermmission,
     error: getPermissionsError,
-  } = useGetPermissions();
+  } = useGetPermissions({
+    limit: 1000,
+    offset: 0,
+  });
   const {
     data: editUserData,
     isLoading: editingUser,
@@ -52,7 +63,7 @@ export default function UserDetailPage() {
   const {
     data: deleteUserData,
     isLoading: deletingUser,
-    error: deleteUsererror,
+    error: deleteUserError,
     mutate: deleteUser,
   } = useDeleteUser();
 
