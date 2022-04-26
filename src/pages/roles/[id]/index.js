@@ -30,7 +30,7 @@ export default function RoleDetailPage() {
   } = useGetOneRole(roleId);
   const {
     data: allPermissions,
-    isLoading: gettingPermmissions,
+    isLoading: gettingPermissions,
     error: getPermissionsError,
   } = useGetPermissions({
     limit: 1000,
@@ -59,7 +59,7 @@ export default function RoleDetailPage() {
   } = useSyncPermissionsToRole();
 
   React.useEffect(() => {
-    if (deleteRoleData) router.replace("/Roles");
+    if (deleteRoleData) router.replace("/roles");
   }, [deleteRoleData]);
 
   React.useEffect(() => {
@@ -103,7 +103,7 @@ export default function RoleDetailPage() {
     });
   };
 
-  if (gettingRole || gettingPermmissions) return <Loading show={true} />;
+  if (gettingRole || gettingPermissions) return <Loading show={true} />;
   return (
     <>
       <Head>

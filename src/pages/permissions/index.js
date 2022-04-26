@@ -84,6 +84,10 @@ const Permissions = () => {
   }, [addPermissionData, addPermissionError]);
 
   React.useEffect(() => {
+    if (addPermissionData) getAllPermissions();
+  }, [addPermissionData]);
+
+  React.useEffect(() => {
     if (addPermissionError) errorModal(addPermissionError.response.data.error);
   }, [addPermissionError]);
 

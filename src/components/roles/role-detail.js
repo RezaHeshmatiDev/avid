@@ -24,7 +24,10 @@ const RoleDetail = ({
   syncingPermissions,
   ...props
 }) => {
-  const [roleState, setRoleState] = React.useState(role);
+  const newRole = { ...role };
+  delete newRole.permissions;
+  const [roleState, setRoleState] = React.useState({ ...newRole });
+  console.log({ roleState });
   const onSubmit = () => editRole({ role: roleState, id: roleId });
   const [permissonsModalIsOpen, setPermissonsModalIsOpen] = React.useState(false);
 
