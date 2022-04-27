@@ -88,15 +88,12 @@ export const DashboardSidebar = (props) => {
           <Box sx={{ pt: 3, display: "flex", alignItem: "center", justifyContent: "space-around" }}>
             <NextLink href="/" passHref>
               <a>
-                <img src="/static/logo.svg" width={50} height={50} />
+                <img src="/static/logo.svg" width={35} height={35} />
               </a>
             </NextLink>
             <div>
-              <Typography color="inherit" variant="subtitle1">
-                Wikiweb
-              </Typography>
               <Typography color="neutral.400" variant="body2">
-                Admin panel{" "}
+                Admin panel
               </Typography>
             </div>
           </Box>
