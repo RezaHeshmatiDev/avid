@@ -9,16 +9,18 @@ import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Loading from "../components/loading";
-import { getToken } from "src/utils/getToken";
 import instance from "src/apiCalls/instance";
 const queryClient = new QueryClient();
 
 const clientSideEmotionCache = createEmotionCache();
 
+export const UserContext = React.createContext(undefined);
+
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const [isLoading, setIsLoading] = React.useState(false);
   const [permissions, setPermissions] = React.useState(undefined);
+  const [user, setUser] = React.useState(undefined);
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
@@ -32,10 +34,14 @@ const App = (props) => {
           return {};
         } else {
           const permissions = res?.data?.data?.permissions;
-          return permissions;
+          const user = res?.data?.data?.user;
+          return { permissions, user };
         }
       })
-      .then((permisisons) => setPermissions(permisisons))
+      .then(({ user, permisisons }) => {
+        setPermissions(permisisons);
+        setUser(user);
+      })
       .catch((err) => {
         window.location.assign("https://auth.agah.me");
       })
@@ -51,18 +57,20 @@ const App = (props) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <title>wikiweb admin panel</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
-          </ThemeProvider>
-        </LocalizationProvider>
-      </CacheProvider>
+      <UserContext.Provider value={user}>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <title>wikiweb admin panel</title>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {getLayout(<Component {...pageProps} />)}
+            </ThemeProvider>
+          </LocalizationProvider>
+        </CacheProvider>
+      </UserContext.Provider>
     </QueryClientProvider>
   );
 };

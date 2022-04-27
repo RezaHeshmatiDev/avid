@@ -10,12 +10,14 @@ import AddUserModal from "src/components/users/addUserModal";
 import useAddUser from "src/apiCalls/useAddUser";
 import Swal from "sweetalert2";
 import { errorModal } from "src/utils/globalModal";
+import { UserContext } from "../_app";
 
 const Users = () => {
   const [showAddUsersModal, setShowAddUsersModal] = React.useState(false);
   const [limit, setLimit] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [keyword, setKeyword] = React.useState(undefined);
+
   const [sortData, setSortData] = React.useState({
     field: "firstName",
     type: "asc",
