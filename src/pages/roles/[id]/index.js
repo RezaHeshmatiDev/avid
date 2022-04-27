@@ -3,27 +3,18 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { DashboardLayout } from "src/components/dashboard-layout";
-import { UserProfileDetails } from "src/components/users/user-profile-details";
-import { UserProfile } from "src/components/users/user-profile";
 import Loading from "src/components/loading";
-import useGetRoles from "src/apiCalls/useGetAllRoles";
 import useGetPermissions from "src/apiCalls/useGetAllPermissions";
-import useEditUser from "src/apiCalls/useEditUser";
-import useSyncPermissions from "src/apiCalls/useSyncPermissions";
-import useSyncRoles from "src/apiCalls/useSyncRoles";
-import useDeleteUser from "src/apiCalls/useDeleteUser";
 import { LoadingButton } from "@mui/lab";
 import useGetOneRole from "src/apiCalls/useGetOneRole";
 import useDeleteRole from "../../../apiCalls/useDeleteRole";
 import RoleDetail from "src/components/roles/role-detail";
 import useEditRole from "src/apiCalls/useEditRole";
 import useSyncPermissionsToRole from "src/apiCalls/useSyncPermissionsToRole";
-import Swal from "sweetalert2";
 import { confirmModal, errorModal } from "src/utils/globalModal";
 export default function RoleDetailPage() {
   const router = useRouter();
   const roleId = router?.query?.id;
-  console.log({ roleId });
   const {
     data: roleData,
     isLoading: gettingRole,

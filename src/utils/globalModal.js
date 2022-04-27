@@ -18,13 +18,16 @@ export const confirmModal = (callback) => {
 
 export const errorModal = (error) => {
   Swal.fire({
-    title: error.code,
-    html: ` <p>${error.message}</p>
+    title: error.code || 500,
+    html: error?.message
+      ? ` <p>${error.message}</p>
+      <br/>
     <hr/>
     <br/>
 
-    ${Object.values(error.fields).join("<br/>")}
-    `,
+    ${error?.fields ? Object.values(error.fields).join("<br/>") : ""}
+    `
+      : "somthing went wrong",
     icon: "error",
     confirmButtonText: "ok",
   });
