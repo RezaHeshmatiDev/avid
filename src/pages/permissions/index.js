@@ -56,6 +56,7 @@ const Permissions = () => {
 
   const permissions = getAllPermissionsData?.data?.data?.permissions;
   const permissionsLength = getAllPermissionsData?.data?.counted_permissions;
+  console.log({ permissionsLength });
   const handleOnSearchClick = () => {
     getAllPermissions({});
   };

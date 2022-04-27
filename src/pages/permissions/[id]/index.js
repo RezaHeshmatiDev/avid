@@ -85,7 +85,7 @@ export default function PermissionDetailPage() {
               </Grid>
               <Grid item lg={4} md={6} xs={12}>
                 <LoadingButton
-                  onClick={() => confirmModal(() => deletePermission({ id: permissionId }))}
+                  onClick={() => confirmModal(() => deletePermission({ permissionId }))}
                   color="error"
                   size="small"
                   loading={deletingPermission}

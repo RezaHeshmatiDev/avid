@@ -73,6 +73,8 @@ export const RoleListResults = ({
                     Name
                   </TableSortLabel>
                 </TableCell>
+                <TableCell>Label</TableCell>
+
                 <TableCell>Users count</TableCell>
                 <TableCell>Permissions count</TableCell>
 
@@ -96,6 +98,7 @@ export const RoleListResults = ({
                     {role.id}
                   </TableCell>
                   <TableCell>{role.name}</TableCell>
+                  <TableCell>{role.label}</TableCell>
                   <TableCell>{role.users_count}</TableCell>
                   <TableCell>{role.permissions_count}</TableCell>
 

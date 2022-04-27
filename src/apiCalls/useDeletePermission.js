@@ -6,7 +6,7 @@ const deletePermission = (permissionId) => {
 };
 
 const useDeletePermission = () => {
-  return useMutation((permissionId) => deletePermission(permissionId));
+  return useMutation(({ permissionId }) => deletePermission(permissionId));
 };
 
 export default useDeletePermission;

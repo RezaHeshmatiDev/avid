@@ -6,7 +6,7 @@ const deleteRole = (roleId) => {
 };
 
 const useDeleteRole = () => {
-  return useMutation((roleId) => deleteRole(roleId));
+  return useMutation(({ roleId }) => deleteRole(roleId));
 };
 
 export default useDeleteRole;

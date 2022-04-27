@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export const confirmModal = (callback) => {
   Swal.fire({
     title: "Are you sure?",

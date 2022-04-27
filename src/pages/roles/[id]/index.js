@@ -118,7 +118,7 @@ export default function RoleDetailPage() {
               </Grid>
               <Grid item lg={4} md={6} xs={12}>
                 <LoadingButton
-                  onClick={() => confirmModal(() => deleteRole({ id: roleId }))}
+                  onClick={() => confirmModal(() => deleteRole({ roleId }))}
                   color="error"
                   size="small"
                   loading={deletingRole}

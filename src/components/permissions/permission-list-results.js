@@ -23,6 +23,7 @@ export const PermissionListResults = ({
   page,
   onRequestSort,
   sortData,
+  permissionsLength,
   ...rest
 }) => {
   const createSortHandler = (property) => (event) => {
@@ -69,9 +70,11 @@ export const PermissionListResults = ({
                         sortData.field == "id" ? "desc" : sortData.type == "asc" ? "desc" : "asc",
                     })}
                   >
-                    Label
+                    Name
                   </TableSortLabel>
                 </TableCell>
+                <TableCell>Label</TableCell>
+
                 <TableCell>Roles count</TableCell>
 
                 <TableCell style={{ textAlign: "center" }}>Config</TableCell>
@@ -93,6 +96,7 @@ export const PermissionListResults = ({
                     {/* </Avatar> */}
                     {permission.id}
                   </TableCell>
+                  <TableCell>{permission.name}</TableCell>
                   <TableCell>{permission.label}</TableCell>
                   <TableCell>{permission.roles_count}</TableCell>
 
@@ -113,7 +117,7 @@ export const PermissionListResults = ({
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={permissions.length}
+        count={permissionsLength}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
